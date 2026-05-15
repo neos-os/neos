@@ -419,6 +419,66 @@
             </div>
         </section>
 
+        <!-- HIVATALOS TÁMOGATÓI FAL -->
+        <section id="backers-wall" style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 30px; border-radius: 6px; margin-top: 40px;">
+            <h3 style="color: #fff; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Hivatalos Támogatói Fal (PlanDB Ledger)</h3>
+            <p style="margin-bottom: 20px; font-size: 0.95rem;">A NeOS ökoszisztéma megvalósulását közvetlenül segítő Early Adopters entitások megváltoztathatatlan listája:</p>
+            
+            <div id="backers-list" style="display: grid; gap: 15px;">
+                <!-- Ide töltődnek be automatikusan a nevek a json fájlból -->
+                <p style="color: #8b949e;">Támogatói lista betöltése...</p>
+            </div>
+        </section>
+
+        <!-- AUTOMATIKUS JAVASCRIPT BEOLVASÓ -->
+        <script>
+            async function loadBackers() {
+                try {
+                    // Beolvassuk a tamogatok.json fájlt a GitHub tárhelyről
+                    const response = await fetch('tamogatok.json');
+                    const backers = await response.json();
+                    const listContainer = document.getElementById('backers-list');
+                    
+                    // Kiürítjük az átmeneti szöveget
+                    listContainer.innerHTML = '';
+                    
+                    if (backers.length === 0) {
+                        listContainer.innerHTML = '<p style="color: #8b949e;">Még nincsenek publikus támogatási adatok.</p>';
+                        return;
+                    }
+                    
+                    // Végigpásztázzuk az adatokat és legeneráljuk a sorokat
+                    backers.forEach(backer => {
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.justify = 'space-between';
+                        row.style.padding = '10px';
+                        row.style.backgroundColor = 'var(--bg-color)';
+                        row.style.borderRadius = '4px';
+                        row.style.border = '1px solid var(--border-color)';
+                        
+                        row.innerHTML = `
+                            <div>
+                                <b style="color: #fff;">${backer.nev}</b> 
+                                <span style="font-size: 0.85rem; color: var(--accent-color); margin-left: 10px;">[${backer.szint}]</span>
+                            </div>
+                            <div style="color: #39ff14; font-family: monospace; font-weight: bold;">
+                                ${backer.osszeg} (${backer.statusz})
+                            </div>
+                        `;
+                        listContainer.appendChild(row);
+                    });
+                } catch (error) {
+                    console.error("Hiba a PlanDB adatfájl beolvasásakor:", error);
+                    document.getElementById('backers-list').innerHTML = '<p style="color: #ff7b72;">A listát jelenleg nem sikerült betölteni.</p>';
+                }
+            }
+
+            // A böngésző azonnal lefuttatja a betöltést az oldal megnyitásakor
+            window.onload = loadBackers;
+        </script>
+
+
         <footer>
             <p>&copy; 2026 NeOS Ecosystem Project. Minden jog fenntartva. Szellemi tulajdonjoggal védett rendszer.</p>
         </footer>
