@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeOS & PlanDB - Az Új Generációs Operációs Rendszer</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --success-color: #238636;
+            --border-color: #30363d;
+            --code-bg: #000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-color);
+            z-index: 1000;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .hero-p {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--success-color);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #2ea043;
+        }
+
+        section {
+            padding: 50px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .card h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .console {
+            background-color: var(--code-bg);
+            font-family: "Courier New", Courier, monospace;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            color: #39ff14;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+
+        .whitepaper-menu {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .whitepaper-menu h3 {
+            color: #fff;
+        }
+
+        .whitepaper-menu ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        .whitepaper-menu li {
+            margin-bottom: 8px;
+        }
+
+        .whitepaper-menu a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .wp-chapter {
+            margin-bottom: 40px;
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .wp-chapter h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .wp-chapter p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tier-card {
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 25px;
+            text-align: center;
+            background-color: var(--card-bg);
+        }
+
+        .tier-card.popular {
+            border-color: var(--accent-color);
+        }
+
+        .price {
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .crypto-box {
+            background-color: var(--code-bg);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.9rem;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <nav>
+            <a href="#technology">Technológia</a>
+            <a href="#demo">Prototípus</a>
+            <a href="#whitepaper">Whitepaper</a>
+            <a href="#support">Támogatás</a>
+        </nav>
+        
+        <header>
+            <h1>NeOS & PlanDB</h1>
+            <div class="subtitle">A matematika és az etika alapú, új generációs operációs rendszer</div>
+            <p class="hero-p">Szakítunk a 30 éves monolitikus szoftverarchitektúrákkal. A NeOS egy olyan determinisztikus, tenzor-gráf alapú környezet, amely Assembly-szintű sebességet és beépített kiberbiztonságot nyújt.</p>
+            <a href="#support" class="btn btn-primary">Projekt támogatása & Licenc biztosítása</a>
+        </header>
+
+        <section id="technology">
+            <h2>A Magtechnológia</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Mulandó Példányok</h3>
+                    <p>Minden rendszereseményhez egy elszigetelt mini-robot jön létre, ami a feladat végeztével nyom nélkül megsemmisül a memóriából. Nincs futó háttérfolyamat, amit meg lehetne fertőzni.</p>
+                </div>
+                <div class="card">
+                    <h3>PlanDB a Kernelben</h3>
+                    <p>Az adatbázis-motor az operációs rendszer szerves része. A relációkat Node-Edge-Group struktúrává alakítja, megszüntetve a nehézkes indexelést és a külső Layer-2 kényszereket.</p>
+                </div>
+                <div class="card">
+                    <h3>Abszolút Perzisztencia</h3>
+                    <p>Minden futó program és kurzorpozíció a gráf pillanatnyi snapshotjaként rögzül. A gép kikapcsolása után minden ott folytatódik, ahol abbamaradt, bootidő nélkül.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo">
+            <h2>Működési prototípus (Szimuláció)</h2>
+            <p>Így hajtja végre a Rust-alapú mag az elszigetelt tranzakciókat az időszeletek (timeslices) végén:</p>
+            <div class="console">
+                <p>[RA] Új hálózati stream érkezett: 'Packet_A'</p>
+                <p>[KERNEL] Mulandó EventInstance_201 sikeresen elindítva.</p>
+                <p>[IM] Adatfolyam ellenőrzése: Etikai és biztonsági szűrők: OK.</p>
+                <p>[PlanDB] Élvektor rögzítve az Only-Append láncban.</p>
+                <p>[RA] EventInstance_201 feladatát elvégezte és NYOM NÉLKÜL MEGGSEMMISÜLT.</p>
+                <p>--- Rendszer készenlétben, várja a következő időszeletet ---</p>
+            </div>
+        </section>
+
+        <section id="whitepaper">
+            <h2>NeOS Technikai Whitepaper</h2>
+            <p style="margin-bottom: 20px;">Részletes rendszerarchitektúra fejlesztők, befektetők és kutatók számára. Ez a dokumentum a laboratóriumi eredmények és elméleti modellek alapján folyamatosan bővül.</p>
+            
+            <div class="whitepaper-menu">
+                <h3>Tartalomjegyzék</h3>
+                <br>
+                <ul>
+                    <li><a href="#wp-kernel">1. Rendszerszintű felosztás és a Kőszikla-etika</a></li>
+                    <li><a href="#wp-instances">2. Az Eseményvezérelt Tenzor-Gráf és a mulandó robotok</a></li>
+                    <li><a href="#wp-plandb">3. PlanDB: Folyamat-normalizált és Only-Append elszámolás</a></li>
+                    <li><a href="#wp-ui">4. A liberalizált 3D-s felhasználói felület (UI) geometriája</a></li>
+                    <li><a href="#wp-muse">5. A MUSE környezet, NeoBase és az architektúra-függetlenség</a></li>
+                    <li><a href="#wp-hardware">6. Konvergált szilícium és a hibrid QPU integráció</a></li>
+                </ul>
+            </div>
+
+            <div id="wp-kernel" class="wp-chapter">
+                <h3>1. Rendszerszintű felosztás és a Kőszikla-etika</h3>
+                <p>A NeOS szigorúan hierarchikus védelmi szintekre oszlik (Kernel Level, Runner Level + Representative Agent, Application Level és User Level). A rendszer integritását egy megváltoztathatatlan (Immutable) etikai mag biztosítja, amely a logikai és halmazelméleti axiómák szintjén fut.</p>
+                <p>Az adminisztrátori szerepkörök reszort-felelősség szerint teljesen elszeparáltak: a rendszergazda kezeli a kvótákat és konténereket, de fizikailag nincs felhasználói felülete, és semmilyen körülmények között nem fér hozzá a felhasználói sandboxok adataihoz. Ez megszünteti a belső visszaélések kockázatát.</p>
+            </div>
+
+            <div id="wp-instances" class="wp-chapter">
+                <h3>2. Az Eseményvezérelt Tenzor-Gráf és a mulandó robotok</h3>
+                <p>A közvetlen hardver-hozzáférés a NeOS-ben csupán illúzió. Minden fizikai vagy szoftveres esemény (megszakítások, hálózati dataflow, felhasználói input) egy mulandó instance-t (mini-robotot) példányosít. Ezek az egységek elszigetelt sandboxban, a kernel előre optimalizált STD könyvtári hivatkozásait meghívva, batch-műveletként futnak le az adott időszeletben.</p>
+                <p>Bár az instance-ok a feladat végén megsemmisülnek a memóriából (megelőzve az állapottartó exploitokat), munkájuk gyümölcse – a felépített node-ok és edge-ek – megmarad a kernel globális gráfjában. Az Intelligent Manager (IM) és a Neurális Háló (NN) folyamatosan elemzi ezeket a megmaradt éleket a kódoptimalizálás érdekében.</p>
+            </div>
+
+            <div id="wp-plandb" class="wp-chapter">
+                <h3>3. PlanDB: Folyamat-normalizált és Only-Append elszámolás</h3>
+                <p>A PlanDB (Process Learning Analyzing and Normalizing DataBase) nem egy külső alkalmazás, hanem maga a kernel adatbázis-alapú koncepciója. A hagyományos táblákat, rekordokat és mezőket csomópontokként és irányított élvektorokként kezeli. Bizonyos táblák natívan Only-Append (csak hozzáfűzhető) struktúrájúak, titkosított hashehhel megerősítve, ami beépített, hamisíthatatlan blokkláncot alkot.</p>
+                <p>A tárolt eljárásokat a végtelenül letisztult, determinisztikus PlanScript okosszerződés-nyelv váltja fel, amely natívan támogatja a komplex számokat (a + bi), a multi-valuta elszámolást (USD, EUR, BTC, SOL) és az automatikus, QR-kódos fizikai kézbesítési igazolást, miközben a NeoStore fenntartására egy igazságos, rejtett 1-5%-os közvetítői díjat számol fel a beszállítók felé.</p>
+            </div>
+
+            <div id="wp-ui" class="wp-chapter">
+                <h3>4. A liberalizált 3D-s felhasználói felület (UI) geometriája</h3>
+                <p>A NeOS szakít a hagyományos téglalap-alapú ablakkezelőkkel. Az ablakok a gráf geometriai objektumaiként (vektorhalmazokként) léteznek, így komplex transzformációkkal tetszőleges formát (kör, sokszög, lebegő vászon) felvehetnek a 3D-s térbeli illúzióban, ahol a felhasználók a Z-tengely mentén navigálhatnak. A UI-tervezés egy külön, játékmotor-szintű kreatív iparággá válik a NeoStore-ban.</p>
+            </div>
+
+            <div id="wp-muse" class="wp-chapter">
+                <h3>5. A MUSE környezet, NeoBase és az architektúra-függetlenség</h3>
+                <p>A NeOS távlati célja a meglévő operációs rendszerek (Windows, Linux, Android, macOS) és adatbázisok (MSSQL, Postgres, NoSQL) integrálása a MUSE (Multi System Environment) meta-környezetbe. A monolitikus kernelek számára felajánlott natív <b>NeoBase interfész</b> kiváltja a nehézkes virtualizációt, közvetlenül a NeOS tenzor-gráf és batch-I/O logikájára fordítva le a rendszerhívásokat, drasztikus biztonság- és sebességnövekedést hozva a meglévő platformoknak.</p>
+                <p>A MUSE lehetővé teszi a szimultán operációs rendszer használatot több monitoron vagy terminálon, teljes UI-liberalizáció mellett, ahol a win32 szoftverek is automatikusan fejlődhetnek a legújabb alapokra. A hivatkozás-alapú kódvégrehajtásnak köszönhetően a NeOS képes az X86-ra írt rendszereket natív sebességgel "megszólaltatni" ARM, RISC-V vagy Mainframe architektúrákon is. A rendszer indítási biztonságát és a hardver-gráf azonnali felépülését a GRUB-ot és UEFI-t felváltó, Rust-alapú <b>NeoFW (NeoFirmware)</b> garantálja, felkészítve az informatikát a jövőbeli 128-1024 bites processzorgenerációkra.</p>
+            </div>
+
+            <div id="wp-hardware" class="wp-chapter">
+                <h3>6. Konvergált szilícium és a hibrid QPU integráció</h3>
+                <p>A NeOS építészete előre fel van készítve a félvezetőipar azon evolúciójára, ahol a CPU, GPU és AI funkciók egyetlen szoftveresen konfigurálható tranzisztormezőben egyesülnek. A NeOS ütemezője képes lesz az időszeletek igényei szerint dinamikusan átcsoportosítani a szilícium belső struktúráját. A CXL és Unified Memory alapú moduláris architektúrák révén a PC-k memóriakapacitása eléri a szerverek szintjét, amit a NeOS lock-free batching technológiája maximális hatásfokon használ ki.</p>
+                <p>A kvantumchipek (QPU) megjelenésével a NeOS nem standalone kvantumszámítógépként, hanem hibrid meta-környezetként integrálja azokat. A PlanScript nyelv komplex változói natívan képesek reprezentálni a QPU szuperpozíciós állapotait, így a rendszer készen áll arra, hogy a jövőbeli asztali vagy szerveroldali kvantum-társprocesszorok erejét azonnal a biztonságos globális elszámolás és adatfeldolgozás szolgálatayába állítsa.</p>
+            </div>
+        </section>
+
+        <section id="support">
+            <h2>Támogasd a Fejlesztést</h2>
+            <p style="margin-bottom: 25px;">A NeOS-t jelenleg független fejlesztőként építem, külső vállalati befolyástól mentesen. A korai támogatók (Early Adopters) garanciát kapnak arra, hogy a piacképes verzió megjelenésekor ingyenes időszaki vagy örökös licencet kapnak.</p>
+            
+            <div class="tiers">
+                <div class="tier-card">
+                    <h3>Bronz Támogató</h3>
+                    <div class="price">10 EUR</div>
+                    <p>Hivatalos köszönetnyilvánítás a NeOS weboldalán és a projekt dokumentációjában.</p>
+                    <div style="margin-top: 20px;">
+                        <span style="font-size: 0.85rem; color: var(--accent-color);">[ PayPal / Kártyás fizetés hamarosan ]</span>
+                    </div>
+                </div>
+
+                <div class="tier-card popular">
+                    <h3>Ezüst Tesztelő</h3>
+                    <div class="price">40 EUR</div>
+                    <p>Korai béta-hozzáférés a futtatható Rust modulokhoz, valamint <b>1 éves INGYENES Pro Licenc</b> a piacképes verzió kiadásakor.</p>
+                    <div style="margin-top: 20px;">
+                        <span style="font-size: 0.85rem; color: var(--accent-color);">[ Kapcsolatfelvétel adományozáshoz ]</span>
+                    </div>
+                </div>
+
+                <div class="tier-card">
+                    <h3>Kvantum Alapító</h3>
+                    <div class="price">100+ EUR</div>
+                    <p>Közvetlen konzultációs lehetőség a fejlesztési irányokról, valamint <b>ÖRÖKÖS (Lifetime) Licenc</b> a NeOS összes jövőbeli verziójára.</p>
+                    <div style="margin-top: 20px;">
+                        <span style="font-size: 0.85rem; color: var(--accent-color);">[ Prioritásos támogatás ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background-color: var(--card-bg); border-radius: 6px; border: 1px solid var(--border-color);">
+                <h3 style="color: #fff; margin-bottom: 10px;">Kriptovaluta Támogatás</h3>
+                <p>Ha közvetlenül kriptoeszközzel szeretnéd segíteni a laborfolyamatokat:</p>
+                <div style="margin-top: 10px;">
+                    <b>Bitcoin (BTC) cím:</b>
+                    <div class="crypto-box">SAJÁT_BITCOIN_CÍMED_HELYE</div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <b>Solana (SOL) cím:</b>
+                    <div class="crypto-box">SAJÁT_SOLANA_CÍMED_HELYE</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 NeOS Project. Minden jog fenntartva. Szellemi tulajdonjoggal védett rendszer.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
